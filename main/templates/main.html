@@ -1,0 +1,105 @@
+<style type="text/css">
+  .tg  {border-collapse:collapse;border-spacing:0;margin: auto; margin-top: 40px;}
+  .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    overflow:hidden;padding:9px 20px;word-break:normal;}
+  .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:9px 20px;word-break:normal;}
+  .tg .tg-mhh0{font-family:"Lucida Console", Monaco, monospace !important;font-size:18px;font-weight:bold;text-align:left;
+    vertical-align:center}
+  .tg .tg-ye1f{font-family:"Lucida Console", Monaco, monospace !important;text-align:left;vertical-align:center}
+  .tg .tg-hv44{border-color:inherit;font-family:"Lucida Console", Monaco, monospace !important;text-align:center;vertical-align:center; font-size: 15px;}
+  .tg .tg-tqnx{border-color:inherit;font-family:"Lucida Console", Monaco, monospace !important;font-size:18px;font-weight:bold;
+    text-align:center;vertical-align:center}
+  .container {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .heading {
+    font-size: 80px;
+    font-family: "Impact";
+    margin-bottom: -15px;
+  }
+  .content {
+    font-size: 18px;
+    font-family: "Courier New";
+    font-weight: bold;
+  }
+  .description{
+    font-size: 15px;
+    font-family: "Lucida Sans";
+    font-style: italic;
+    margin-bottom: 40px;
+  }
+</style>
+
+<div class="container">
+  <!-- <h1 class="heading">{{ app }}</h1>
+  <h2 class="description">{{ description }}</h2> -->
+  <p class="heading">{{ app }}</p>
+  <p class="description">{{ description }}</p>
+  <p><span class="content">{{ name }}</span></p>
+  <p><span class="content">{{ npm }}</span></p>
+  <p><span class="content">{{ class }}</span></p>
+
+  <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-tqnx">No.</th>
+        <th class="tg-tqnx">Album</th>
+        <th class="tg-tqnx">Duration</th>
+        <th class="tg-mhh0">Year</th>
+        <th class="tg-tqnx">Artist</th>
+        <th class="tg-tqnx">Artwork</th>
+        <th class="tg-tqnx">Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-hv44">1.</td>
+        <td class="tg-hv44">{{ albums.1 }}</td>
+        <td class="tg-hv44">{{ duration.1 }}</td>
+        <td class="tg-ye1f">{{ year.1 }}</td>
+        <td class="tg-hv44">{{ artists.1 }}</td>
+        <td class="tg-hv44"><img src="https://resources.tidal.com/images/454e707d/13c8/4cb3/84e9/494d69f66f97/640x640.jpg" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.1 }}</th>
+      </tr>
+      <tr>
+        <td class="tg-hv44">2.</td>
+        <td class="tg-hv44">{{ albums.2 }}</td>
+        <td class="tg-hv44">{{ duration.2 }}</td>
+        <td class="tg-ye1f">{{ year.2 }}</td>
+        <td class="tg-hv44">{{ artists.2 }}</td>
+        <td class="tg-hv44"><img src="https://resources.tidal.com/images/2c9417ec/11ca/411e/8729/0acbda2f76ce/640x640.jpg" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.2 }}</th>
+      </tr>
+      <tr>
+        <td class="tg-hv44">3.</td>
+        <td class="tg-hv44">{{ albums.3 }}</td>
+        <td class="tg-hv44">{{ duration.3 }}</td>
+        <td class="tg-ye1f">{{ year.3 }}</td>
+        <td class="tg-hv44">{{ artists.3 }}</td>
+        <td class="tg-hv44"><img src="https://resources.tidal.com/images/819ba4c9/88f2/4336/b1f1/02b08727cfb5/640x640.jpg" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.3 }}</th>
+      </tr>
+      <tr>
+        <td class="tg-hv44">4.</td>
+        <td class="tg-hv44">{{ albums.4 }}</td>
+        <td class="tg-hv44">{{ duration.4 }}</td>
+        <td class="tg-ye1f">{{ year.4 }}</td>
+        <td class="tg-hv44">{{ artists.4 }}</td>
+        <td class="tg-hv44"><img src="https://i.scdn.co/image/ab67616d0000b273afd192f82c3e9904b13714aa" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.4 }}</th>
+      </tr>
+      <tr>
+        <td class="tg-hv44">5.</td>
+        <td class="tg-hv44">{{ albums.5 }}</td>
+        <td class="tg-hv44">{{ duration.5 }}</td>
+        <td class="tg-ye1f">{{ year.5 }}</td>
+        <td class="tg-hv44">{{ artists.5 }}</td>
+        <td class="tg-hv44"><img src="https://resources.tidal.com/images/79c2be89/3a61/47d5/abd5/31a86a958c79/640x640.jpg" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.4 }}</th>
+      </tr>
+    </tbody>
+    </table>
+</div>
