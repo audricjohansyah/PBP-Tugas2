@@ -106,6 +106,8 @@ App     :
 10. Centang bagian HTTP Listener on PORT dan klik Deploy App untuk memulai proses deployment aplikasi
 
 # Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+![Bagan](https://raw.githubusercontent.com/audricjohansyah/PBP-Tugas2/9bed03bb2113695a9b8b6997de87d1a0d00a1eed/Bagan%20PBP.jpg)
+
 User akan melakukan request yang merupakan awal dari proses ini Django kemudian akan memproses URL dari client dan menyesuaikannya sesuai dengan file urls.py yang berisi pengaturan URL yang menghubungkan URL yang diminta oleh client dengan view (fungsi) yang akan menangani permintaan tersebut. Lalu, Django akan akan membuka file views.py yang mengontrol logika dan meminta tampilan. Setelah itu, file models.py akan menangani data yang sesuai permintaan user dan folder template akan berisi file dengan extension html. File extension html tersebut akan berisi berbagai kode html untuk mengatur tampilan bagi user. Setelah selesai, tampilan akan muncul untuk user.
 
 # Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
