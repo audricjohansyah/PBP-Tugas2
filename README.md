@@ -3,7 +3,7 @@
 Nama    : Alexander Audric Johansyah <br>
 NPM     : 2206815466 <br>
 Kelas   : PBP <br>
-App     : 
+App     : https://soundwave.adaptable.app/main/
 
 # Membuat sebuah Django Projek
 1. Buat direktori yang ingin kita gunakan untuk membuat proyek Django
