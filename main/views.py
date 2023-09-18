@@ -16,6 +16,7 @@ def show_main(request):
         'app': 'SoundW♫ve',
         'description': "Discover and enjoy a vast music library with our extensive collection",
         'items': items,
+        'item_count' : Item.objects.count(),
         'albums': {
             '1': "What's Going On",
             '2': 'H2O',
@@ -87,3 +88,10 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = Item.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+# def count_items(request):
+#     # Lakukan kueri ke model Anda dan hitung jumlah item
+#     item_count = Item.objects.count()
+
+#     context = {'item_count': item_count}
+#     return render(request, "main", context)
