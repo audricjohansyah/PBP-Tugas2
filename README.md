@@ -1,9 +1,10 @@
 Nama    : Alexander Audric Johansyah <br>
 NPM     : 2206815466 <br>
 Kelas   : PBP <br>
-App     :
 
-[Tugas 2](#tugas-2)
+Link Tugas:<br>
+[Tugas 2](#tugas-2) <br>
+[Tugas 3](#tugas-3)
 
 # **Tugas 2**
 # Membuat sebuah Django Projek
@@ -137,3 +138,234 @@ Setiap proyek Python dapat memiliki dependensi atau paket Python yang berbeda-be
     ViewModel: ViewModel menghubungkan Model dan View. Ini berisi kode yang memformat dan mengelola data dari Model agar sesuai dengan tampilan yang diperlukan oleh View. ViewModel juga menerima input dari View dan memperbarui Model jika diperlukan.
 
     MVVM digunakan untuk merancang aplikasi berbasis *user interface* yang kompleks, seperti aplikasi mobile atau aplikasi desktop dengan tampilan yang dinamis. Ini memungkinkan pemisahan yang kuat antara logika dan tampilan.
+
+# **Tugas 3**
+# Apa perbedaan antara form POST dan form GET dalam Django?
+POST biasanya digunakan untuk mengirim data yang akan membuat perubahan di sisi server seperti untuk membuat atau menulis ulang sumber daya/data tertentu. POST biasa digunakan untuk mengirim data yang sensitif seperti password, data tersebut disembunyikan dari URL. Data yang dikirim ke server ini disimpan di badan permintaan permintaan HTTP. Maka dari itu, POST lebih aman daripada GET karena data tidak tampil di URL berarti data sensitif tidak akan tampil secara terbuka.
+
+GET biasanya digunakan di sisi klien (Browser) untuk mengirim permintaan ke server tertentu untuk mendapatkan data atau sumber daya tertentu. GET digunakan untuk permintaan pencarian yang tidak mengubah apapun. GET mengirim data sebagai parameter yang terlihat di URL dan data tersebut terbatas ukurannya. GET digunakan untuk data yang kurang aman karena terlihat di URL dan dapat diakses oleh pihak ketiga
+
+*Source*: https://www.geeksforgeeks.org/difference-between-http-get-and-post-methods/
+
+# Perbedaan Utama Antara XML, JSON, dan HTML Dalam Konteks Pengiriman Data
+- ## JSON (*JavaScript Object Notation*)<br>
+    JSON didesain menjadi *self-describing*, sehingga mudah untuk dimengerti. JSON digunakan pada banyak aplikasi web maupun mobile, yaitu untuk menyimpan dan mengirimkan data. Sintaks JSON merupakan turunan dari Object JavaScript. Akan tetapi format JSON berbentuk text, sehingga kode untuk membaca dan membuat JSON banyak terdapat di bahasa pemrograman.
+    Data pada JSON disimpan dalam bentuk key dan value. Value dapat berupa tipe data primitif (string, number, boolean) ataupun berupa objek. JSON biasa yang digunakan untuk pertukaran data antara aplikasi.
+
+- ## XML (*Extensible Markup Language*)<br>
+    XML didesain menjadi *self-descriptive*, jadi dengan membaca XML tersebut kita bisa mengerti informasi apa yang ingin disampaikan dari data yang tertulis. XML digunakan pada banyak aplikasi web maupun mobile, yaitu untuk menyimpan dan mengirimkan data. XML hanya berisi informasi yang dibungkus di dalam tag. Kita perlu menulis program untuk mengirim, menerima, menyimpan, atau menampilkan informasi tersebut. Dokumen XML membentuk  data dalam struktur tree dengan namespace untuk kategori data yeng berbeda. Hanya dapat di-*parsed* menggunakan pengurai XML Mendukung semua tipe data JSON, Boolean, tanggal, gambar, dan namespace. XML sering digunakan untuk pertukaran data yang terstruktur antara aplikasi.
+- ## HTML (*HyperText Markup Language*)<br>
+    HTML adalah bahasa markup standar untuk dokumen yang dirancang untuk ditampilkan di browser web. HTML fokus pada representasi visual dan interaksi pengguna pada halaman web.
+
+Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan untuk pertukaran data, dan HTML digunakan untuk mengatur tampilan dan interaksi pada halaman web.
+
+# Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+- Sintaks yang digunakan JSON mudah untuk ditulis dan dibaca oleh manusia
+- Sintaks merupakan turunan dari Object JavaScript yang membuat JSON banyak digunakan di aplikasi web dan mobile.
+- JSON didesain menyediakan format yang sederhana serta ringkas dan data pada JSON disimpan dalam bentuk key dan value.
+- JSON dapat diurai menggunakan fungsi JavaScript standar yang merupakan bahasa pemrograman yang umum digunakan dalam pengembangan aplikasi web. 
+- Perbedaan syntax dan ukuran file JSON juga membuat *parsing* JSON lebih cepat dibandingkan XML.
+- JSON memiliki ukuran file yang lebih kecil dan transmisi data yang lebih cepat.
+- Penguraian JSON lebih aman dibandingkan XML. Struktur XML rentan *unauthorized modification* dan deklarasi tipe dokumen eksternal yang tidak terstruktur.
+
+# Membuat input form untuk menambahkan objek model pada app sebelumnya.
+1. Buat berkas baru pada direktori main dengan nama `forms.py` untuk membuat struktur form yang dapat menerima data produk baru. Tambahkan kode berikut ke dalam berkas `forms.py`.
+    ```python
+    from django.forms import ModelForm
+    from main.models import Product
+
+    class ItemForm(ModelForm):
+        class Meta:
+            model = Item
+            fields = ["album", "year", "artist"]
+    ```
+2. Buka berkas `views.py` yang ada pada folder main dan tambahkan beberapa import berikut pada bagian paling atas.
+    ```python
+    from django.http import HttpResponseRedirect
+    from main.forms import ProductForm
+    from django.urls import reverse
+    ```
+3. Buat fungsi baru dengan nama `create_product` pada berkas tersebut yang menerima parameter request dan tambahkan potongan kode di bawah ini untuk menghasilkan formulir yang dapat menambahkan data produk secara otomatis ketika data di-submit dari form.
+    ```python
+    def create_product(request):
+    form = ItemForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "create_product.html", context)
+    ```
+4. Ubahlah fungsi `show_main` yang sudah ada pada berkas `views.py` menjadi seperti berikut.
+    ```python
+    def show_main(request):
+        items = Item.objects.all() #Tambahkan ini
+
+        context = {
+            ....
+            'items': items #Tambahkan ini
+            ....
+        }
+
+        return render(request, "main.html", context)
+    ```
+5. Buka `urls.py` yang ada pada folder main dan import fungsi `create_product` yang sudah kamu buat tadi.
+    ```python
+    from main.views import show_main, create_product
+    ```
+6. Tambahkan path url ke dalam urlpatterns pada `urls.py` di main untuk mengakses fungsi yang sudah di-import pada poin sebelumnya.
+    ```python
+    path('create-product', create_product, name='create_product'),
+    ```
+7. Buat berkas HTML baru dengan nama `create_product.html` pada direktori `main/templates`. Isi `create_product.html` dengan kode berikut.
+    ```python
+    #Ubah sesuai kebutuhan
+    {% extends 'base.html' %} 
+
+    {% block content %}
+    <h1 class="requestalbum">Request Album</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table">
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input class="content" type="submit" value="Request"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    {% endblock %}
+    ```
+8. Buka `main.html` dan tambahkan kode berikut di dalam `{% block content %}` untuk menampilkan data produk dalam bentuk table serta tombol `"Request Album"` yang akan redirect ke halaman form.
+    ```python
+    #Ubah sesuai kebutuhan
+    ...
+    ...
+    ...
+    <h1 class="addalbum">Request an album</h1>
+    <h2 class="albumcount">Album requested: {{item_count}}</h2>
+    <table class="tg">
+        <tr>
+            <th class="tg-tqnx">Album</th>
+            <th class="tg-tqnx">Year</th>
+            <th class="tg-tqnx">Artist</th>
+            <th class="tg-tqnx">Date Requested</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td class="tg-hv44">{{item.album}}</td>
+                <td class="tg-hv44">{{item.year}}</td>
+                <td class="tg-hv44">{{item.artist}}</td>
+                <td class="tg-hv44">{{item.date_added}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <br />
+
+    <a href="{% url 'main:create_product' %}">
+        <button class="content">
+            Request album
+        </button>
+    </a>
+    {% endblock content %}
+    ```
+# Tambahkan 5 fungsi views untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID.
+## Mengembalikan Data dalam Bentuk XML
+1. Buka `views.py` yang ada pada folder main dan tambahkan import `HttpResponse` dan `Serializer` pada bagian paling atas.
+    ```python
+    from django.http import HttpResponse
+    from django.core import serializers
+    ```
+2. Buatlah sebuah fungsi yang menerima parameter request dengan nama `show_xml` dan buatlah sebuah variabel di dalam fungsi tersebut yang menyimpan hasil query dari seluruh data yang ada pada `Item`. Tambahkan return function berupa *HttpResponse* yang berisi parameter data hasil query yang sudah diserialisasi menjadi XML dan parameter `content_type="application/xml"`.
+    ```python
+    def show_xml(request):
+        data = Item.objects.all()
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+    ```
+
+3. Buka `urls.py` yang ada pada folder `main` dan import fungsi yang sudah kamu buat tadi.
+    ```python
+    from main.views import show_main, create_product, show_xml 
+    ```
+
+4. Tambahkan *path url* ke dalam `urlpatterns` untuk mengakses fungsi yang sudah diimpor tadi.
+    ```python
+    ...
+    path('xml/', show_xml, name='show_xml'), 
+    ...
+    ```
+5. Jalankan proyek Django-mu dengan perintah `python manage.py runserver` dan bukalah http://localhost:8000/xml di browser.
+
+## Mengembalikan Data dalam Bentuk JSON
+1. Buka `views.py` yang ada pada folder main dan buatlah sebuah fungsi baru yang menerima parameter request dengan nama `show_json` dengan sebuah variabel di dalamnya yang menyimpan hasil query dari seluruh data yang ada pada Item. Tambahkan return function berupa *HttpResponse* yang berisi parameter data hasil query yang sudah diserialisasi menjadi JSON dan parameter `content_type="application/json"`
+    ```python
+    def show_json(request):
+        data = Item.objects.all()
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")show_xml 
+    ```
+2. Buka `urls.py` yang ada pada folder `main` dan import fungsi yang sudah kamu buat tadi.
+    ```python
+    from main.views import show_main, create_product, show_xml, show_json
+    ```
+
+3. Tambahkan *path url* ke dalam `urlpatterns` untuk mengakses fungsi yang sudah diimpor tadi.
+    ```python
+    ...
+    path('json/', show_json, name='show_json'), 
+    ...
+    ```
+4. Jalankan proyek Django-mu dengan perintah `python manage.py runserver` dan bukalah http://localhost:8000/json di browser.
+
+## Mengembalikan Data Berdasarkan ID dalam Bentuk XML dan JSON
+1. Buka `views.py` yang ada pada folder `main` dan buatlah sebuah fungsi baru yang menerima parameter request dan id dengan nama `show_xml_by_id` dan `show_json_by_id`
+
+2. Buatlah sebuah variabel di dalam fungsi tersebut yang menyimpan hasil query dari data dengan id tertentu yang ada pada Item. Rambahkan return function berupa *HttpResponse* yang berisi parameter data hasil query yang sudah diserialisasi menjadi JSON atau XML dan parameter *content_type* dengan value `"application/xml" (untuk format XML)` atau `"application/json" (untuk format JSON)`
+    - XML
+        ```python
+        def show_xml_by_id(request, id):
+            data = Item.objects.filter(pk=id)
+            return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")show_xml 
+        ```
+    - JSON
+        ```python
+        def show_json_by_id(request, id):
+            data = Item.objects.filter(pk=id)
+            return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+        ```
+
+3. Buka `urls.py` yang ada pada folder `main` dan impor fungsi yang sudah kamu buat tadi.
+    ```python
+    from main.views import show_main, create_product, show_xml, show_json, show_xml_by_id, show_json_by_id 
+    ```
+4. Tambahkan *path url* ke dalam `urlpatterns` untuk mengakses fungsi yang sudah diimpor tadi.
+    ```python
+    ...
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'), 
+    ...
+
+    ```
+5. Jalankan proyek Django-mu dengan perintah `python manage.py runserver` dan bukalah http://localhost:8000/xml/[id] atau http://localhost:8000/json/[id] di browser.
+
+# Screenshot hasil akses URL pada Postman dan HTML
+## HTML View
+![HTML View](https://github.com/audricjohansyah/PBP-Tugas2/blob/b8c758a8a8bce5e11a10fbc72f911f73dcdd721f/Images/HTML%20View.jpg?raw=true)
+## JSON View
+![JSON View](https://github.com/audricjohansyah/PBP-Tugas2/blob/b8c758a8a8bce5e11a10fbc72f911f73dcdd721f/Images/JSON%20View.jpg?raw=true)
+## XML View
+![XML View](https://github.com/audricjohansyah/PBP-Tugas2/blob/b8c758a8a8bce5e11a10fbc72f911f73dcdd721f/Images/XML%20View.jpg?raw=true)
+
+## JSON View by ID
+![JSON View by ID](https://github.com/audricjohansyah/PBP-Tugas2/blob/b8c758a8a8bce5e11a10fbc72f911f73dcdd721f/Images/JSON%20View%20by%20ID.jpg?raw=true)
+
+## XML View by ID
+![XML View by ID](https://github.com/audricjohansyah/PBP-Tugas2/blob/b8c758a8a8bce5e11a10fbc72f911f73dcdd721f/Images/XML%20View%20by%20ID.jpg?raw=true)
+
+
+
