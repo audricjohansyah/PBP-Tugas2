@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1 class="requestalbum">Request Album</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table class="table">
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input class="content" type="submit" value="Request"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}

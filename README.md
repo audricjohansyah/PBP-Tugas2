@@ -1,10 +1,11 @@
-# **Tugas 2 PBP**
-
 Nama    : Alexander Audric Johansyah <br>
 NPM     : 2206815466 <br>
 Kelas   : PBP <br>
-App     : https://soundwave.adaptable.app/main/
+App     :
 
+[Tugas 2](#tugas-2)
+
+# **Tugas 2 PBP**
 # Membuat sebuah Django Projek
 1. Buat direktori yang ingin kita gunakan untuk membuat proyek Django
 2. Buka command prompt di dalam direktori yang sudah kita buat sebelumnya

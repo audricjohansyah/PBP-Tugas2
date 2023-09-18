@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Soundwave- Home{% endblock %}</title>
+    <style type="text/css">
+        /* Your common CSS styles here */
+        .tg  {border-collapse:collapse;border-spacing:0;margin: auto; margin-top: 30px; margin-bottom: 50px}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+            overflow:hidden;padding:9px 20px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+            font-weight:normal;overflow:hidden;padding:9px 20px;word-break:normal;}
+        .tg .tg-mhh0{font-family:"Lucida Console", Monaco, monospace !important;font-size:18px;font-weight:bold;text-align:left;
+            vertical-align:center}
+        .tg .tg-ye1f{font-family:"Lucida Console", Monaco, monospace !important;text-align:left;vertical-align:center}
+        .tg .tg-hv44{border-color:inherit;font-family:"Lucida Console", Monaco, monospace !important;text-align:center;vertical-align:center; font-size: 15px;}
+        .tg .tg-tqnx{border-color:inherit;font-family:"Lucida Console", Monaco, monospace !important;font-size:18px;font-weight:bold;
+            text-align:center;vertical-align:center}
+        .container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+        .heading {
+            margin-top: 40px;
+            font-size: 85px;
+            font-family: "Impact";
+            margin-bottom: -15px;
+        }
+        .content {
+            font-size: 16px;
+            font-family: "Courier New";
+            font-weight: bold;
+        }
+        .description{
+            font-size: 17px;
+            font-family: "Lucida Sans";
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+        .addalbum{
+            font-size: 30px;
+            font-family: "Trebuchet MS";
+            font-style: bold;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+        .requestalbum{
+            font-size: 60px;
+            font-family: "Papyrus";
+            font-style: bold;
+            margin-bottom: 40px;
+        }
+        .table{
+            border-spacing:20px;margin: auto; margin-top: 30px; margin-bottom: 45px
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">{% block heading %}{% endblock %}</h1>
+        <h2 class="description">{% block description %}{% endblock %}</h2>
+        <p><span class="content">{{ name }}</span></p>
+        <p><span class="content">{{ npm }}</span></p>
+        <p><span class="content">{{ class }}</span></p>
+        
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
