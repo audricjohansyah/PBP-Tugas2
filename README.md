@@ -5,7 +5,7 @@ App     :
 
 [Tugas 2](#tugas-2)
 
-# **Tugas 2 PBP**
+# **Tugas 2**
 # Membuat sebuah Django Projek
 1. Buat direktori yang ingin kita gunakan untuk membuat proyek Django
 2. Buka command prompt di dalam direktori yang sudah kita buat sebelumnya
