@@ -169,8 +169,9 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
 - Penguraian JSON lebih aman dibandingkan XML. Struktur XML rentan *unauthorized modification* dan deklarasi tipe dokumen eksternal yang tidak terstruktur.
 
 # Membuat input form untuk menambahkan objek model pada app sebelumnya.
-1. Buat berkas baru pada direktori main dengan nama `forms.py` untuk membuat struktur form yang dapat menerima data produk baru. Tambahkan kode berikut ke dalam berkas `forms.py`.
+1. Buat berkas baru di direktori main dengan nama `forms.py` untuk membuat struktur form yang dapat menerima data produk baru. Masukkan kode berikut.
     ```python
+    #Sesuaikan dengan kebutuhan
     from django.forms import ModelForm
     from main.models import Product
 
@@ -179,13 +180,13 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
             model = Item
             fields = ["album", "year", "artist"]
     ```
-2. Buka berkas `views.py` yang ada pada folder main dan tambahkan beberapa import berikut pada bagian paling atas.
+2. Buka berkas `views.py` yang ada pada folder main dan tambahkan beberapa import berikut.
     ```python
     from django.http import HttpResponseRedirect
     from main.forms import ProductForm
     from django.urls import reverse
     ```
-3. Buat fungsi baru dengan nama `create_product` pada berkas tersebut yang menerima parameter request dan tambahkan potongan kode di bawah ini untuk menghasilkan formulir yang dapat menambahkan data produk secara otomatis ketika data di-submit dari form.
+3. Buat fungsi baru dengan nama untuk membuat item pada berkas tersebut yang menerima parameter request dan tambahkan potongan kode di bawah ini untuk menghasilkan formulir yang dapat menambahkan data produk secara otomatis ketika data di-submit dari form.
     ```python
     def create_product(request):
     form = ItemForm(request.POST or None)
@@ -199,6 +200,7 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
     ```
 4. Ubahlah fungsi `show_main` yang sudah ada pada berkas `views.py` menjadi seperti berikut.
     ```python
+    #Sesuaikan nama model
     def show_main(request):
         items = Item.objects.all() #Tambahkan ini
 
@@ -210,7 +212,7 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
 
         return render(request, "main.html", context)
     ```
-5. Buka `urls.py` yang ada pada folder main dan import fungsi `create_product` yang sudah kamu buat tadi.
+5. Buka `urls.py` yang ada pada folder main dan import fungsi yang sudah dibuat tadi.
     ```python
     from main.views import show_main, create_product
     ```
@@ -218,9 +220,9 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
     ```python
     path('create-product', create_product, name='create_product'),
     ```
-7. Buat berkas HTML baru dengan nama `create_product.html` pada direktori `main/templates`. Isi `create_product.html` dengan kode berikut.
-    ```python
-    #Ubah sesuai kebutuhan
+7. Buat berkas HTML baru pada direktori `main/templates` dan isi dengan kode berikut.
+    ```python 
+    #Sesuaikan dengan kebutuhan
     {% extends 'base.html' %} 
 
     {% block content %}
@@ -241,7 +243,7 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
 
     {% endblock %}
     ```
-8. Buka `main.html` dan tambahkan kode berikut di dalam `{% block content %}` untuk menampilkan data produk dalam bentuk table serta tombol `"Request Album"` yang akan redirect ke halaman form.
+8. Buka `main.html` dan tambahkan kode berikut di dalam `{% block content %}` untuk menampilkan data produk dalam bentuk table serta tombol yang akan redirect ke halaman form.
     ```python
     #Ubah sesuai kebutuhan
     ...
@@ -284,6 +286,7 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
     ```
 2. Buatlah sebuah fungsi yang menerima parameter request dengan nama `show_xml` dan buatlah sebuah variabel di dalam fungsi tersebut yang menyimpan hasil query dari seluruh data yang ada pada `Item`. Tambahkan return function berupa *HttpResponse* yang berisi parameter data hasil query yang sudah diserialisasi menjadi XML dan parameter `content_type="application/xml"`.
     ```python
+    #Sesuaikan dengan nama model
     def show_xml(request):
         data = Item.objects.all()
         return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
@@ -305,6 +308,7 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
 ## Mengembalikan Data dalam Bentuk JSON
 1. Buka `views.py` yang ada pada folder main dan buatlah sebuah fungsi baru yang menerima parameter request dengan nama `show_json` dengan sebuah variabel di dalamnya yang menyimpan hasil query dari seluruh data yang ada pada Item. Tambahkan return function berupa *HttpResponse* yang berisi parameter data hasil query yang sudah diserialisasi menjadi JSON dan parameter `content_type="application/json"`
     ```python
+    #Sesuaikan dengan nama model
     def show_json(request):
         data = Item.objects.all()
         return HttpResponse(serializers.serialize("json", data), content_type="application/json")show_xml 
@@ -328,12 +332,14 @@ Kesimpulan, XML digunakan untuk mendefinisikan struktur data, JSON digunakan unt
 2. Buatlah sebuah variabel di dalam fungsi tersebut yang menyimpan hasil query dari data dengan id tertentu yang ada pada Item. Rambahkan return function berupa *HttpResponse* yang berisi parameter data hasil query yang sudah diserialisasi menjadi JSON atau XML dan parameter *content_type* dengan value `"application/xml" (untuk format XML)` atau `"application/json" (untuk format JSON)`
     - XML
         ```python
+        #Sesuaikan dengan nama model
         def show_xml_by_id(request, id):
             data = Item.objects.filter(pk=id)
             return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")show_xml 
         ```
     - JSON
         ```python
+        #Sesuaikan dengan nama model
         def show_json_by_id(request, id):
             data = Item.objects.filter(pk=id)
             return HttpResponse(serializers.serialize("json", data), content_type="application/json")
