@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class = "container">
+
+    <h1 class="loginheader">Login to SoundW♫ve</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table class="tablelogin">
+            <tr>
+                <td class="desclogin">Username    : </td>
+                <td><input class="loginfield" type="text" name="username" placeholder="Username" class="form-control"></td>
+            </tr>
+                    
+            <tr>
+                <td class="desclogin">Password    : </td>
+                <td><input class="loginfield" type="password" name="password" placeholder="Password" class="form-control"></td>
+            </tr>
+        </table>
+        <btn style="text-align: center;"><input class="buttonlogin" type="submit" value="Login"></btn>
+    </form>
+
+    {% if messages %}
+        <ul style="text-align: center;">
+            {% for message in messages %}
+                <li class="msglogin">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}     
+        
+    <a class="registerlogin">Don't have an account yet? <a class="registerlogin" href="{% url 'main:register' %}">Register Now</a>
+
+</div>
+
+{% endblock content %}

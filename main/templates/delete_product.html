@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block meta %}
+    <title>Delete</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container">
+    <h1 class="loginheader">Confirm Removal</h1>
+    <p class="desclogin">Are you sure you want to remove the album <span style="font-size: 35px; font-family: 'Lucida Sans'; font-style: bold; text-decoration: underline;">{{ item.album }}</span> ?</p>
+    <table class="table">
+        <tr>
+            <td>
+                <a href="{% url 'main:show_main' %}">
+                    <input class="buttonremove" type="submit" value="Cancel">
+                </a>
+            </td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <input class="buttonremove" type="submit" value="Remove">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock content %}

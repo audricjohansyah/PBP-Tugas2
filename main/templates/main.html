@@ -4,8 +4,20 @@
 {% block heading %}{{ app }}{% endblock %}
 {% block description %}{{ description }}{% endblock %}
 {% block content %}
+<p><span class="content">User: {{ name }}</span></p>
+<p><span class="content">ID: {{ random_user_id }}</span></p>
+<p><span class="content">Class: {{ class }}</span></p>
+<h5 class="descsession">Last Login Session: {{ last_login }}</h5>
+<a href="{% url 'main:logout' %}">
+  <button class="buttonlogout">
+      Logout
+  </button>
+</a>
   <table class="tg">
     <thead>
+      <tr>
+        <th class="tg-tqnx" style="font-size: 40px; padding-top: 20px; padding-bottom: 20px;" colspan="7">SoundW♫ve's Catalogue</th>
+      </tr>
       <tr>
         <th class="tg-tqnx">No.</th>
         <th class="tg-tqnx">Album</th>
@@ -67,27 +79,50 @@
   <h1 class="addalbum">Request an album</h1>
   <h2 class="albumcount">Album requested: {{item_count}}</h2>
   <table class="tg">
+    {% if item_count > 0 %}
     <tr>
+        <th class="tg-tqnx">No.</th>
         <th class="tg-tqnx">Album</th>
         <th class="tg-tqnx">Year</th>
         <th class="tg-tqnx">Artist</th>
+        <th class="tg-tqnx">Amount</th>
+        <th class="tg-tqnx">Modify</th>
         <th class="tg-tqnx">Date Requested</th>
+        <th class="tg-tqnx">Remove</th>
     </tr>
     {% for item in items %}
         <tr>
+            <td class="tg-hv44">{{ forloop.counter }}</td>
             <td class="tg-hv44">{{item.album}}</td>
             <td class="tg-hv44">{{item.year}}</td>
             <td class="tg-hv44">{{item.artist}}</td>
+            <td class="tg-hv44">{{item.amount}}</td>
+            <td class="tg-hv44">
+              <form method="POST" action="{% url 'main:increment_amount' item.id %}">
+                  {% csrf_token %}
+                <button class="buttonincdec" type="submit">+</button>
+              </form>
+              <form method="POST" action="{% url 'main:decrement_amount' item.id %}">
+                  {% csrf_token %}
+                <button class="buttonincdec" type="submit">-</button>
+            </form>
             <td class="tg-hv44">{{item.date_added}}</td>
+            <td class="tg-hv44">
+              <a href="{% url 'main:delete_product' item.id %}">
+                <button class="buttondeletealbum">
+                  Remove
+                </button>
+              </a>
+            </td>
         </tr>
     {% endfor %}
+    {% endif %}
 </table>
 
-<br />
-
 <a href="{% url 'main:create_product' %}">
-    <button class="content">
-        Request album
+    <button class="buttonrequest">
+      Request album
     </button>
 </a>
+
 {% endblock content %}
