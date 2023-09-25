@@ -1,5 +1,6 @@
 import datetime
 import random
+import string
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from main.forms import ItemForm
@@ -18,9 +19,10 @@ def show_main(request):
     user_id = request.user.id
     random_number = random.randint(10**8, 10**9 - 1)
     formatted_random_number = f"{random_number:09d}"
+    random_alphabet_char = random.choice(string.ascii_letters)
     context = {
         'name': request.user.username,
-        'class': 'PBP C',
+        'class': f'PBP {random_alphabet_char.upper()}',
         'npm': '2206815466',
         'app': 'SoundW♫ve',
         'description': "Discover and enjoy a vast music library with our extensive collection",
