@@ -1,52 +1,69 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<div class="container">
-    <h1 class="requestalbum">Request Album</h1>
+<style type="text/css">
+    body {
+        background-image: url("https://i.etsystatic.com/42347499/r/il/7f2979/4843696398/il_1588xN.4843696398_jfto.jpg");
+        background-size: cover; 
+        background-position: center; 
+    }
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha (0.5) for opacity */
+        z-index: -1; /* Place the overlay behind other content */
+    }
+</style>
+<div class="containercreate">
+    <h1 class="request-album">Request Album</h1>
 
     <form method="POST">
         {% csrf_token %}
-        <table class="table">
+        <table class="form-table">
             <tr>
-                <td><label for="{{ form.album.id_for_label }}">Album:</label></td>
+                <td><label class="form-label" for="{{ form.album.id_for_label }}">Album:</label></td>
                 <td>
-                    <input type="text" name="album" class="form-field">
+                    <input class="form-field" type="text" name="album">
                     {% if form.album.errors %}
-                        <span class="error">{{ form.album.errors }}</span>
+                        <span class="form-error">{{ form.album.errors }}</span>
                     {% endif %}
                 </td>
             </tr>
             <tr>
-                <td><label for="{{ form.year.id_for_label }}">Year:</label></td>
+                <td><label class="form-label" for="{{ form.year.id_for_label }}">Year:</label></td>
                 <td>
-                    <input type="number" name="year" class="form-field">
+                    <input class="form-field" type="number" name="year">
                     {% if form.year.errors %}
-                        <span class="error">{{ form.year.errors }}</span>
+                        <span class="form-error">{{ form.year.errors }}</span>
                     {% endif %}
                 </td>
             </tr>
             <tr>
-                <td><label for="{{ form.artist.id_for_label }}">Artist:</label></td>
+                <td><label class="form-label" for="{{ form.artist.id_for_label }}">Artist:</label></td>
                 <td>
-                    <input type="text" name="artist" class="form-field">
+                    <input class="form-field" type="text" name="artist">
                     {% if form.artist.errors %}
-                        <span class="error">{{ form.artist.errors }}</span>
+                        <span class="form-error">{{ form.artist.errors }}</span>
                     {% endif %}
                 </td>
             </tr>
             <tr>
-                <td><label for="{{ form.amount.id_for_label }}">Amount:</label></td>
+                <td><label class="form-label" for="{{ form.amount.id_for_label }}">Amount:</label></td>
                 <td>
-                    <input type="number" name="amount" class="form-field">
+                    <input class="form-field" type="number" name="amount">
                     {% if form.amount.errors %}
-                        <span class="error">{{ form.amount.errors }}</span>
+                        <span class="form-error">{{ form.amount.errors }}</span>
                     {% endif %}
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <input class="content" type="submit" value="Request"/>
+                    <input class="form-submit" type="submit" value="Request"/>
                 </td>
             </tr>
         </table>

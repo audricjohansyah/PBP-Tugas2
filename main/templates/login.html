@@ -5,36 +5,53 @@
 {% endblock meta %}
 
 {% block content %}
-
-<div class = "container">
-
-    <h1 class="loginheader">Login to SoundW♫ve</h1>
+<style type="text/css">
+    body {
+        background-image: url("https://i.etsystatic.com/35092126/r/il/26f5d7/3863487113/il_fullxfull.3863487113_hg2v.jpg");
+        background-size: cover; 
+        background-position: center; 
+    }
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha (0.5) for opacity */
+        z-index: -1; /* Place the overlay behind other content */
+    }
+</style>
+<div class="containerlogin">
+    <h1 class="login-header">Login to SoundW♫ve</h1>
     <form method="POST" action="">
         {% csrf_token %}
-        <table class="tablelogin">
+        <table class="login-table">
             <tr>
-                <td class="desclogin">Username    : </td>
-                <td><input class="loginfield" type="text" name="username" placeholder="Username" class="form-control"></td>
+                <td class="login-label">Username:</td>
+                <td><input class="login-field" type="text" name="username" placeholder="Username"></td>
             </tr>
-                    
             <tr>
-                <td class="desclogin">Password    : </td>
-                <td><input class="loginfield" type="password" name="password" placeholder="Password" class="form-control"></td>
+                <td class="login-label">Password:</td>
+                <td><input class="login-field" type="password" name="password" placeholder="Password"></td>
             </tr>
         </table>
-        <btn style="text-align: center;"><input class="buttonlogin" type="submit" value="Login"></btn>
+        <div class="text-center">
+            <input class="login-button" type="submit" value="Login">
+        </div>
     </form>
 
     {% if messages %}
-        <ul style="text-align: center;">
-            {% for message in messages %}
-                <li class="msglogin">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    <a class="registerlogin">Don't have an account yet? <a class="registerlogin" href="{% url 'main:register' %}">Register Now</a>
+    <ul class="login-messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
+    <p class="login-register">
+        Don't have an account yet? <a href="{% url 'main:register' %}" class="register-link">Register Now</a>
+    </p>
 </div>
 
 {% endblock content %}

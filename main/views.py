@@ -96,7 +96,6 @@ def delete_product(request, id):
     
     return render(request, 'delete_product.html', {'item': itemdelete})
 
-
 def show_xml(request):
     data = Item.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")

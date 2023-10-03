@@ -5,7 +5,8 @@ Kelas   : PBP <br>
 Link Tugas:<br>
 [Tugas 2](#tugas-2) <br>
 [Tugas 3](#tugas-3) <br>
-[Tugas 4](#tugas-4)
+[Tugas 4](#tugas-4) <br>
+[Tugas 5](#tugas-5)
 
 # **Tugas 2**
 ## Membuat sebuah Django Projek
@@ -413,7 +414,7 @@ Akan tetapi, ada beberapa risiko potensial yang perlu diwaspadai terkait dengan 
 3. Cookies dapat menjadi sasaran *web application threats* seperti *Cross-Site Scripting* (XSS) dan *Cross Site Request Forgery* (CRSF) jika tidak dielola dengan benar. Developer harus memvalidasi data yang disimpan dalam cookies dan menghindari penyimpanan data sensitif di sana.
 
 ## Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar. 
-### Membuat Fungsi dan Form Registrasi
+### **Membuat Fungsi dan Form Registrasi**
 1. Jalankan virtual environment dengan menggunakan perintah `env\Scripts\activate.bat`
 2. Tambahkan `import redirect`, `UserCreationForm`, dan `messages` pada bagian paling atas
     ```python
@@ -564,7 +565,7 @@ Akan tetapi, ada beberapa risiko potensial yang perlu diwaspadai terkait dengan 
     path('login/', login_user, name='login'),
     ...
     ```
-### Membuat Fungsi Logout
+### **Membuat Fungsi Logout**
 1. Buka `views.py` yang ada pada subdirektori `main` dan buatlah fungsi dengan nama `logout_user` yang menerima parameter `request`.
 
 2. Tambahkan import logout pada bagian paling atas.
@@ -601,7 +602,7 @@ mengakses fungsi yang sudah diimpor tadi.
     path('logout/', logout_user, name='logout'),
     ...
     ```
-### Merestriksi Akses Halaman Main
+### **Merestriksi Akses Halaman Main**
 1. Buka views.py yang ada pada subdirektori main dan tambahkan `import login_required` pada bagian paling atas.
     ```python
     from django.contrib.auth.decorators import login_required
@@ -614,7 +615,7 @@ mengakses fungsi yang sudah diimpor tadi.
     def show_main(request):
     ...
     ```
-### Menggunakan Data Dari Cookies
+### **Menggunakan Data Dari Cookies**
 1. Lakukan `logout` jika sedang menjalankan aplikasi Django-mu.
 
 2. Buka `views.py` yang ada pada subdirektori main dan tambahkan `import HttpResponseRedirect`, `reverse`, dan `datetime` pada bagian paling atas.
@@ -702,3 +703,107 @@ mengakses fungsi yang sudah diimpor tadi.
 7. Ketik angka `1` lagi untuk menetapkan *user* dengan `ID 1` (yang sudah kita buat sebelumnya) pada model yang sudah ada.
 
 8. Lakukan `python manage.py migrate` untuk mengaplikasikan migrasi yang dilakukan pada poin sebelumnya.
+
+# **Tugas 5**
+## Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+### **Element Selector**
+Element selector digunakan untuk memilih elemen berdasarkan nama elemen tertentu. Ini akan memengaruhi semua elemen teks paragraf pada halaman web sehingga cocok ingin mengubah gaya semua teks paragraf secara seragam. Contoh:
+```css
+p {
+  text-align: center;
+  color: red;
+}
+```
+
+### **ID Selector**
+ ID selector digunakan untuk memilih elemen dengan ID tertentu. ID harus unik dalam satu halaman sehingga cocok digunakan untuk mengidentifikasi elemen tertentu. Contoh:
+ ```css
+#para1 {
+  text-align: center;
+  color: red;
+}
+```
+
+### **Class Selector**
+Menggunakan class selector memungkinkan kita untuk mengganti gaya elemen dengan class tertentu. Ini  berguna saat ingin menerapkan gaya yang sama pada beberapa elemen, tetapi tidak semua elemen dengan tag yang sama. Contoh:
+```css
+.center {
+  text-align: center;
+  color: red;
+}
+```
+### **Universal Selector**
+Universal selector akan mempengaruhi semua elemen pada halaman. DIgunakan jika ingin mengubah semua elemen pada halaman dengan gaya yang seragam. Contoh:
+```css
+* {
+  text-align: center;
+  color: blue;
+}
+```
+### **Grouping Selector**
+Grouping selector digunakan untuk mengubah gaya elemen yang berbeda-beda. Kita bisa mendefinisikan gaya elemen yang berbeda-beda tersebut ke dalam satu grup.
+```css
+h1, h2, p {
+  text-align: center;
+  color: red;
+}
+```
+## Jelaskan HTML5 Tag yang kamu ketahui.
+- `<table>`   : Membuat suatu tabel
+- `<tbody>`   : Membuat badan tabel
+- `<td>`      : Membuat *cell* tabel
+- `<thead>`   : Membuat header tabel
+- `<tr>`      : Membuat baris tabel
+- `<header>`    : Memmbuat header
+- `<h1> - <h6>`  : Membuat header 1 sampai 6
+- `<p>`   : Membuat paragraf
+- `<div>` :	Menentukan bagian dalam halaman
+- `<body>`:	Menentukan badan suatu elemen
+- `<style>`: Spesifikasi gaya suatu elemen
+- `<title>`: Menentukan judul
+- `<html>`	: Spesifikasi dokumen HTML
+
+## Jelaskan perbedaan antara margin dan padding
+### Margin
+Margin adalah ruang di sekitar suatu elemen. Margin digunakan untuk memindahkan elemen ke atas atau ke bawah pada halaman serta ke kiri atau ke kanan. Margin sepenuhnya transparan dan tidak memiliki warna latar belakang apa pun. Ini membersihkan area di sekitar elemen. Setiap sisi elemen memiliki ukuran margin yang dapat diubah satu per satu. Dalam menciptakan celah, margin mendorong elemen-elemen yang berdekatan menjauh.
+
+### Padding
+Padding adalah ruang antara elemen dan konten terkait di dalamnya. Ini menentukan bagaimana elemen terlihat dan ditempatkan di dalam wadah. Ini juga menunjukkan latar belakang wadah di sekitar elemen di dalamnya. Padding dapat dipengaruhi oleh warna latar belakang karena membersihkan area di sekitar konten. Untuk menciptakan celah, itu akan memperbesar ukuran elemen atau memperkecil konten di dalamnya. Secara default, ukuran elemen bertambah.
+
+## Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+### Bootstrap
+Bootstrap adalah framework CSS yang sudah lama ada dan mencakup berbagai komponen UI siap pakai, grid system, dan gaya bawaan yang memudahkan desain web responsif. Ini cocok untuk pengembang yang ingin cepat membangun situs dengan komponen siap pakai.
+
+### Tailwind CSS
+Tailwind adalah framework CSS yang memfokuskan pada utilitas. Ini tidak menyediakan komponen UI siap pakai, tetapi memungkinkan untuk membangun tampilan dengan menentukan gaya melalui kelas-kelas utilitas di HTML. Ini cocok untuk pengembang yang ingin lebih kontrol dalam desain tampilan mereka.
+
+Kapan sebaiknya digunakan tergantung pada preferensi dan kebutuhan. Bootstrap cocok jika ingin menghemat waktu dengan komponen UI siap pakai. Tailwind cocok jika ingin lebih fleksibel dalam mendefinisikan gaya sendiri.
+
+## Kustomisasi *design* pada template HTML
+1. Mendefinisikan style CSS sesuai dengan kebutuhan pada `base.html`. Style ini akan digunakan untuk mengubah tampilan di 
+    ```css
+        <style type="text/css">
+            /* Your common CSS styles here */
+            ....
+            .container {
+                text-align: center;
+                margin-top: 40px;
+                margin-bottom: 50px;
+            }
+            .heading {
+                margin-top: 40px;
+                font-size: 100px;
+                font-family: "Impact";
+                margin-bottom: -15px;
+            }
+            .content {
+                font-size: 19px;
+                font-family: "Courier New";
+                font-weight: bold;
+            }
+            .... 
+            /* other style goes here */
+        <style>
+    ```
+2. Implementasi style CSS yang sudah dibuat di `base.html` pada `register.html`, `login.html`, `create_product.html`, `main.html`, dan `delete_product.html`.
+3. Jalankan virtual environment dengan `env\Scripts\activate.bat`, nyalakan server `python manage.py runserver`, dan buka http://localhost:8000 untuk melihat hasilnya dan lakukan pembenaran dan penyesuaian.
