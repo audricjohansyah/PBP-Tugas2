@@ -66,13 +66,13 @@
         <th class="tg-hv44">{{ stock.4 }}</th>
       </tr>
       <tr>
-        <td class="tg-hv44" style="color: red;">5.</td>
-        <td class="tg-hv44" style="color: red;">{{ albums.5 }}</td>
-        <td class="tg-hv44" style="color: red;">{{ duration.5 }}</td>
-        <td class="tg-ye1f" style="color: red;">{{ year.5 }}</td>
-        <td class="tg-hv44" style="color: red;">{{ artists.5 }}</td>
-        <td class="tg-hv44" style="color: red;"><img src="{{ artwork.5 }}" width="100" height="100"></td>
-        <th class="tg-hv44" style="color: red;">{{ stock.5 }}</th>
+        <td class="tg-hv44">5.</td>
+        <td class="tg-hv44">{{ albums.5 }}</td>
+        <td class="tg-hv44">{{ duration.5 }}</td>
+        <td class="tg-ye1f">{{ year.5 }}</td>
+        <td class="tg-hv44">{{ artists.5 }}</td>
+        <td class="tg-hv44"><img src="{{ artwork.5 }}" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.5 }}</th>
       </tr>
     </tbody>
   </table>
@@ -92,12 +92,12 @@
     </tr>
     {% for item in items %}
         <tr>
-            <td class="tg-hv44">{{ forloop.counter }}</td>
-            <td class="tg-hv44">{{item.album}}</td>
-            <td class="tg-hv44">{{item.year}}</td>
-            <td class="tg-hv44">{{item.artist}}</td>
-            <td class="tg-hv44">{{item.amount}}</td>
-            <td class="tg-hv44">
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{ forloop.counter }}</td>
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.album}}</td>
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.year}}</td>
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.artist}}</td>
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.amount}}</td>
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">
               <form method="POST" action="{% url 'main:increment_amount' item.id %}">
                   {% csrf_token %}
                 <button class="buttonincdec" type="submit">+</button>
@@ -106,8 +106,8 @@
                   {% csrf_token %}
                 <button class="buttonincdec" type="submit">-</button>
             </form>
-            <td class="tg-hv44">{{item.date_added}}</td>
-            <td class="tg-hv44">
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.date_added}}</td>
+            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">
               <a href="{% url 'main:delete_product' item.id %}">
                 <button class="buttondeletealbum">
                   Remove
