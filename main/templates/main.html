@@ -1,128 +1,147 @@
 {% extends "base.html" %}
-
 {% block title %}Soundwave - Home{% endblock %}
-{% block heading %}{{ app }}{% endblock %}
-{% block description %}{{ description }}{% endblock %}
 {% block content %}
-<p><span class="content">User: {{ name }}</span></p>
-<p><span class="content">ID: {{ random_user_id }}</span></p>
-<p><span class="content">Class: {{ class }}</span></p>
-<h5 class="descsession">Last Login Session: {{ last_login }}</h5>
-<a href="{% url 'main:logout' %}">
-  <button class="buttonlogout">
-      Logout
-  </button>
-</a>
-  <table class="tg">
-    <thead>
-      <tr>
-        <th class="tg-tqnx" style="font-size: 40px; padding-top: 20px; padding-bottom: 20px;" colspan="7">SoundW♫ve's Catalogue</th>
-      </tr>
-      <tr>
-        <th class="tg-tqnx">No.</th>
-        <th class="tg-tqnx">Album</th>
-        <th class="tg-tqnx">Duration</th>
-        <th class="tg-mhh0">Year</th>
-        <th class="tg-tqnx">Artist</th>
-        <th class="tg-tqnx">Artwork</th>
-        <th class="tg-tqnx">Stock</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="tg-hv44">1.</td>
-        <td class="tg-hv44">{{ albums.1 }}</td>
-        <td class="tg-hv44">{{ duration.1 }}</td>
-        <td class="tg-ye1f">{{ year.1 }}</td>
-        <td class="tg-hv44">{{ artists.1 }}</td>
-        <td class="tg-hv44"><img src="{{ artwork.1 }}" width="100" height="100"></td>
-        <th class="tg-hv44">{{ stock.1 }}</th>
-      </tr>
-      <tr>
-        <td class="tg-hv44">2.</td>
-        <td class="tg-hv44">{{ albums.2 }}</td>
-        <td class="tg-hv44">{{ duration.2 }}</td>
-        <td class="tg-ye1f">{{ year.2 }}</td>
-        <td class="tg-hv44">{{ artists.2 }}</td>
-        <td class="tg-hv44"><img src="{{ artwork.2 }}" width="100" height="100"></td>
-        <th class="tg-hv44">{{ stock.2 }}</th>
-      </tr>
-      <tr>
-        <td class="tg-hv44">3.</td>
-        <td class="tg-hv44">{{ albums.3 }}</td>
-        <td class="tg-hv44">{{ duration.3 }}</td>
-        <td class="tg-ye1f">{{ year.3 }}</td>
-        <td class="tg-hv44">{{ artists.3 }}</td>
-        <td class="tg-hv44"><img src="{{ artwork.3 }}" width="100" height="100"></td>
-        <th class="tg-hv44">{{ stock.3 }}</th>
-      </tr>
-      <tr>
-        <td class="tg-hv44">4.</td>
-        <td class="tg-hv44">{{ albums.4 }}</td>
-        <td class="tg-hv44">{{ duration.4 }}</td>
-        <td class="tg-ye1f">{{ year.4 }}</td>
-        <td class="tg-hv44">{{ artists.4 }}</td>
-        <td class="tg-hv44"><img src="{{ artwork.4 }}" width="100" height="100"></td>
-        <th class="tg-hv44">{{ stock.4 }}</th>
-      </tr>
-      <tr>
-        <td class="tg-hv44">5.</td>
-        <td class="tg-hv44">{{ albums.5 }}</td>
-        <td class="tg-hv44">{{ duration.5 }}</td>
-        <td class="tg-ye1f">{{ year.5 }}</td>
-        <td class="tg-hv44">{{ artists.5 }}</td>
-        <td class="tg-hv44"><img src="{{ artwork.5 }}" width="100" height="100"></td>
-        <th class="tg-hv44">{{ stock.5 }}</th>
-      </tr>
-    </tbody>
-  </table>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">{{ app }}</a>
+        <a class="navbar-brand" href="#">{{ name }}</a>
+        <a class="navbar-brand" href="#">{{ class }}</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:show_main' %}">Main</a>
+            </li>
+          </ul>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'main:catalogue_view' %}">Catalogue</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </nav>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Request Album</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="album" class="col-form-label">Album:</label>
+                        <input type="text" class="form-control" id="album" name="album">
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="col-form-label">Year:</label>
+                        <input type="number" class="form-control" id="year" name="year">
+                    </div>
+                    <div class="mb-3">
+                        <label for="artist" class="col-form-label">Artist:</label>
+                        <input type="text" class="form-control" id="artist" name="artist">
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="amount" name="amount">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Request Album</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <h5 class="descsession" style="text-align: center;">Last Login Session: {{ last_login }}</h5>
   <h1 class="addalbum">Request an album</h1>
   <h2 class="albumcount">Album requested: {{item_count}}</h2>
-  <table class="tg">
-    {% if item_count > 0 %}
-    <tr>
-        <th class="tg-tqnx">No.</th>
-        <th class="tg-tqnx">Album</th>
-        <th class="tg-tqnx">Year</th>
-        <th class="tg-tqnx">Artist</th>
-        <th class="tg-tqnx">Amount</th>
-        <th class="tg-tqnx">Modify</th>
-        <th class="tg-tqnx">Date Requested</th>
-        <th class="tg-tqnx">Remove</th>
-    </tr>
-    {% for item in items %}
-        <tr>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{ forloop.counter }}</td>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.album}}</td>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.year}}</td>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.artist}}</td>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.amount}}</td>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">
-              <form method="POST" action="{% url 'main:increment_amount' item.id %}">
+
+  <table class="tg" id="product_table"></table>
+  <a>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-bottom: 40px;">Request Album</button>
+  </a>
+
+<script>
+  async function getProducts() {
+      return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+  }
+
+  async function refreshProducts() {
+        document.getElementById("product_table").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = `<tr>
+            <th>No.</th>
+            <th>Album</th>
+            <th>Year</th>
+            <th>Artist</th>
+            <th>Amount</th>
+            <th>Edit</th>
+            <th>Date Requested</th>
+            <th>Remove</th>
+        </tr>`
+        products.forEach((item, index, array) => {
+            const isLastRow = index === array.length - 1;
+            const rowClass = isLastRow ? "last-item" : "";
+            htmlString += `\n<tr class="${rowClass}">
+            <td >${index + 1}</td>
+            <td>${item.fields.album}</td>
+            <td>${item.fields.year}</td>
+            <td>${item.fields.artist}</td>
+            <td>${item.fields.amount}</td>
+            <td>
+              <form method="POST" action="increment-amount/${item.pk}/">
                   {% csrf_token %}
                 <button class="buttonincdec" type="submit">+</button>
               </form>
-              <form method="POST" action="{% url 'main:decrement_amount' item.id %}">
+              <form method="POST" action="decrement-amount/${item.pk}/">
                   {% csrf_token %}
                 <button class="buttonincdec" type="submit">-</button>
-            </form>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">{{item.date_added}}</td>
-            <td class="tg-hv44{% if forloop.last %} last-item{% endif %}">
-              <a href="{% url 'main:delete_product' item.id %}">
-                <button class="buttondeletealbum">
-                  Remove
-                </button>
-              </a>
+              </form>
             </td>
-        </tr>
-    {% endfor %}
-    {% endif %}
-</table>
+            <td>${item.fields.date_added}</td>
+            <td>
+                <a href="delete-product/${item.pk}">
+                    <button>
+                        Remove
+                    </button>
+                </a>
+            </td>
+        </tr>` 
+        })
+        
+        document.getElementById("product_table").innerHTML = htmlString
+    }
 
-<a href="{% url 'main:create_product' %}">
-    <button class="buttonrequest">
-      Request album
-    </button>
-</a>
+    refreshProducts()
+
+    function addProduct() {
+        fetch("{% url 'main:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts)
+
+        document.getElementById("form").reset()
+        return false
+      }
+
+      document.getElementById("button_add").onclick = addProduct
+</script>
 
 {% endblock content %}

@@ -12,66 +12,19 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required(login_url='/login')
 def show_main(request):
     items = Item.objects.filter(user=request.user)
-    user_id = request.user.id
-    random_number = random.randint(10**8, 10**9 - 1)
-    formatted_random_number = f"{random_number:09d}"
-    random_alphabet_char = random.choice(string.ascii_letters)
     context = {
         'name': request.user.username,
-        'class': f'PBP {random_alphabet_char.upper()}',
-        'npm': '2206815466',
+        'class': 'PBP C',
         'app': 'SoundW♫ve',
-        'description': "Discover and enjoy a vast music library with our extensive collection",
         'items': items,
-        'random_user_id': f'{user_id} - {formatted_random_number}',
+        'user_id' : request.user.id,
         'item_count' : items.count(),
         'last_login': request.COOKIES['last_login'],
-        'albums': {
-            '1': "What's Going On",
-            '2': 'H2O',
-            '3': 'Never Too Much',
-            '4': 'La La Means I Love You',
-            '5': 'My Cherie Amour'
-        },
-        'duration': {
-            '1': '35 min 32 sec',
-            '2': '46 min 31 sec',
-            '3': '36 min 57 sec',
-            '4': '31 min 18 sec',
-            '5': '35 min 53 sec'
-        },
-        'year':{
-            '1': '1971',
-            '2': '1982',
-            '3': '1981',
-            '4': '1968',
-            '5': '1969'
-        },
-        'artists':{
-            '1': 'Marvin Gaye',
-            '2': 'Daryl Hall & John Oates',
-            '3': 'Luther Vandross',
-            '4': 'The Delfonics',
-            '5': 'Stevie Wonder'
-        },
-        'stock':{
-            '1': '2',
-            '2': '5',
-            '3': '4',
-            '4': '1',
-            '5': '6'
-        },
-        'artwork':{
-            '1': 'https://resources.tidal.com/images/454e707d/13c8/4cb3/84e9/494d69f66f97/640x640.jpg',
-            '2': "https://resources.tidal.com/images/2c9417ec/11ca/411e/8729/0acbda2f76ce/640x640.jpg",
-            '3': "https://resources.tidal.com/images/819ba4c9/88f2/4336/b1f1/02b08727cfb5/640x640.jpg",
-            '4': "https://i.scdn.co/image/ab67616d0000b273afd192f82c3e9904b13714aa",
-            '5': "https://resources.tidal.com/images/79c2be89/3a61/47d5/abd5/31a86a958c79/640x640.jpg"
-        }
     }
 
     return render(request, "main.html", context)
@@ -159,3 +112,74 @@ def decrement_amount(request, id):
     if product.amount <= 0:
         product.delete()
     return redirect ('main:show_main')
+
+def get_product_json(request):
+    product_item = Item.objects.filter(user = request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        album = request.POST.get("album")
+        year = request.POST.get("year")
+        artist = request.POST.get("artist")
+        amount = request.POST.get("amount")
+        user = request.user
+
+        new_product = Item(album=album, year=year, artist=artist, amount=amount, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+def catalogue_view(request):
+    catalogue = {
+        'name': request.user.username,
+        'class': 'PBP C',
+        'app': 'SoundW♫ve',
+        'description': "Discover and enjoy a vast music library with our extensive collection",
+        'albums': {
+            '1': "What's Going On",
+            '2': 'H2O',
+            '3': 'Never Too Much',
+            '4': 'La La Means I Love You',
+            '5': 'My Cherie Amour'
+        },
+        'duration': {
+            '1': '35 min 32 sec',
+            '2': '46 min 31 sec',
+            '3': '36 min 57 sec',
+            '4': '31 min 18 sec',
+            '5': '35 min 53 sec'
+        },
+        'year':{
+            '1': '1971',
+            '2': '1982',
+            '3': '1981',
+            '4': '1968',
+            '5': '1969'
+        },
+        'artists':{
+            '1': 'Marvin Gaye',
+            '2': 'Daryl Hall & John Oates',
+            '3': 'Luther Vandross',
+            '4': 'The Delfonics',
+            '5': 'Stevie Wonder'
+        },
+        'stock':{
+            '1': '2',
+            '2': '5',
+            '3': '4',
+            '4': '1',
+            '5': '6'
+        },
+        'artwork':{
+            '1': 'https://resources.tidal.com/images/454e707d/13c8/4cb3/84e9/494d69f66f97/640x640.jpg',
+            '2': "https://resources.tidal.com/images/2c9417ec/11ca/411e/8729/0acbda2f76ce/640x640.jpg",
+            '3': "https://resources.tidal.com/images/819ba4c9/88f2/4336/b1f1/02b08727cfb5/640x640.jpg",
+            '4': "https://i.scdn.co/image/ab67616d0000b273afd192f82c3e9904b13714aa",
+            '5': "https://resources.tidal.com/images/79c2be89/3a61/47d5/abd5/31a86a958c79/640x640.jpg"
+        }
+    }
+    return render(request, 'catalogue.html', catalogue)

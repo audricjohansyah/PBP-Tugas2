@@ -6,7 +6,8 @@ Link Tugas:<br>
 [Tugas 2](#tugas-2) <br>
 [Tugas 3](#tugas-3) <br>
 [Tugas 4](#tugas-4) <br>
-[Tugas 5](#tugas-5)
+[Tugas 5](#tugas-5) <br>
+[Tugas 6](#tugas-6) 
 
 # **Tugas 2**
 ## Membuat sebuah Django Projek
@@ -807,3 +808,228 @@ Kapan sebaiknya digunakan tergantung pada preferensi dan kebutuhan. Bootstrap co
     ```
 2. Implementasi style CSS yang sudah dibuat di `base.html` pada `register.html`, `login.html`, `create_product.html`, `main.html`, dan `delete_product.html`.
 3. Jalankan virtual environment dengan `env\Scripts\activate.bat`, nyalakan server `python manage.py runserver`, dan buka http://localhost:8000 untuk melihat hasilnya dan lakukan pembenaran dan penyesuaian.
+
+# **Tugas 6**
+## Jelaskan perbedaan antara asynchronous programming dengan synchronous programming.
+### Asynchronous
+ Kode dirancang agar dapat tugas dapat berjalan bersamaan. Saat tugas yang memakan waktu sedang berjalan, program dapat menjalankan tugas lain tanpa harus menunggu. Program adalah *multi-thread*, yang berarti program dapat berjalan parallel. Selain itu *asynchronous programming* itu *non-blocking*, yang berarti mereka akan mengirim banyak *request* ke server
+
+ ### Synchronous
+ Kode dijalankan satu per satu, dan program harus menunggu tugas sebelum melanjutkan ke tugas berikutnya. Ini bisa menjadi lambat jika ada tugas yang memakan waktu. Program adalah *single-thread*, yang berarti program hanya menjalankan satu operasi. Selain itu *synchronous programming* itu *blocking*, yang berarti mereka hanya mengirim satu *request* ke server dan menunggu *request* tersebut terjawab oleh server
+
+## Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma event-driven programming. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
+Paradigma pemrograman berbasis peristiwa adalah cara pemrograman di mana program merespons peristiwa yang terjadi, seperti tindakan pengguna, input, atau perubahan lainnya. Program akan menunggu dan bereaksi terhadap peristiwa yang terjadi. Paradigma ini dapat digunakan sebagian dalam program, hanya untuk fungsi atau operasi tertentu yang akan dijalankan saat peristiwa terjadi.
+
+Contoh penerapan pemrograman berbasis peristiwa dalam program adalah ketika pengguna menekan tombol `Request Album` pada main page web Setelah menekan tombol tersebut,  web akan menampilkan *pop-up* yang terdapat sebuah "form" untuk mengisi detail album yang ingin diminta. Setelah hal tersebut diisi, dan tombol `Request Album` (di dalam *pop-up*) ditekan, sebuah objek XMLHttpRequest akan dibuat oleh JavaScript dan akan mengirimkan permintaan ke server. Server akan memproses permintaan tersebut dan menjawab respons kembali ke web dan dibaca JavaScript. Terakhir, web akan diperbarui berdasarkan respons dan menampilkan item baru yang diterima.
+
+## Jelaskan penerapan asynchronous programming pada AJAX.
+Penerapan asynchronous programming pada AJAX mengacu pada kemampuan untuk melakukan operasi tanpa harus menunggu hasilnya secara langsung, sehingga program dapat menjalankan tugas lain tanpa terblokir oleh operasi yang sedang berlangsung. Ini sangat berguna dalam kasus seperti permintaan HTTP atau pengambilan data dari server, di mana waktu yang diperlukan untuk mengambil data dapat bervariasi Dalam AJAX, asynchronous programming memungkinkan JavaScript untuk melakukan permintaan ke server dan menerima respons dari server tanpa menghentikan eksekusi program utama atau halaman web.
+
+## Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada library jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+### Fetch API
+- Fetch API adalah bagian dari JavaScript yang sudah terintegrasi dalam browser. Ini berarti tidak perlu mengunduh atau mengimpor pustaka tambahan seperti jQuery untuk menggunakannya.
+- Fetch API lebih ringan dalam hal ukuran dan kinerja dibandingkan dengan jQuery. Hal ini cocok untuk mengembangkan aplikasi web yang memerlukan efisiensi dan kecepatan.
+- Fetch API mengembalikan objek `Promise`, yang membuat pengelolaan *asynchronous* code menjadi lebih mudah dibaca dan dimengerti.
+
+### jQuery
+- jQuery mendukung *browser* yang lebih lama dan baru, sehingga cocok dengan beragam jenis *browser*
+- jQuery memiliki *plugin* yang sangat besar dan kuat yang dapat digunakan untuk menambahkan berbagai fitur dan fungsi ke situs web dengan mudah
+- Terdapat jQuery UI yang menyediakan komponen antarmuka pengguna yang siap pakai sehingga mempercepat pengembangan antarmuka pengguna.
+
+### Pendapat
+Saya cenderung lebih suka menggunakan Fetch API. Fetch API lebih modern, ringan, dan merupakan standar yang direkomendasikan. Ini adalah pilihan yang baik untuk proyek-proyek baru dan ingin fokus pada pengembangan dengan JavaScript. Selain itu, dengan AJAX dalam memproses request *asynchronous* dapat lebih mudah diproses di dalam Fetch API.
+
+## JavaScript dan Asynchronous JavaScript
+### Membuat Fungsi untuk Mengembalikan Data JSON
+1. Buat fungsi baru pada `views.py` dengan nama `get_product_json` yang menerima parameter `request`
+    ```python
+    def get_product_json(request):
+        product_item = Item.objects.filter(user = request.user) #Filter product berdasarkan user
+        return HttpResponse(serializers.serialize('json', product_item))
+    ```
+2. Buka `urls.py` dan impor fungsi `get_product_json` Tambahkan routing untuk fungsi dengan memasukkan *path url* ke `urlpatterns`.
+    ```python
+    ...
+    path('get-product/', get_product_json, name='get_product_json'),
+    ...
+    ```
+
+### Membuat Fungsi untuk Menambahkan Produk dengan AJAX
+1. Buat fungsi baru pada `views.py` dengan nama `add_product_ajax` yang menerima parameter `request`.
+
+2. Impor `from django.views.decorators.csrf import csrf_exempt` pada berkas `views.py`.
+
+3. Tambahkan dekorator `@csrf_exempt` di atas fungsi `add_product_ajax`
+    ```python
+    @csrf_exempt
+    def add_product_ajax(request):
+        if request.method == 'POST':
+            album = request.POST.get("album")
+            year = request.POST.get("year")
+            artist = request.POST.get("artist")
+            amount = request.POST.get("amount")
+            user = request.user
+
+            new_product = Item(album=album, year=year, artist=artist, amount=amount, user=user)
+            new_product.save()
+
+            return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+    ```
+4. Buka `urls.py` dan impor fungsi `add_product_ajax` Tambahkan routing untuk fungsi dengan memasukkan *path url* ke `urlpatterns`.
+    ```python
+    ...
+    path('create-product-ajax/', add_product_ajax, name='add_product_ajax')
+    ...
+    ```
+### Menampilkan Data Product dengan Fetch() API
+1. Buka berkas `main.html` pada `main/templates` dan **hapuslah** bagian kode tabel yang menampilan product yang sudah ditambahkan. Gantilah kode table tersebut dengan kode berikut sebagai structure table.
+    ```html
+    <table id="product_table"></table>
+    ```
+2. Buatlah block `<Script>` di bagian bawah berkas dan buatlah fungsi baru pada block `Script>` tersebut dengan nama `getProducts()`. Setelah itu, Buatlah fungsi baru pada block `<Script>` dengan nama `refreshProducts()` yang digunakan untuk me-*refresh* data produk secara *asynchronous*.
+
+
+    ```html
+    <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+        }
+
+        async function refreshProducts() {
+            document.getElementById("product_table").innerHTML = ""
+            const products = await getProducts()
+            let htmlString = `<tr>
+                <th>No.</th>
+                <th>Album</th>
+                <th>Year</th>
+                <th>Artist</th>
+                <th>Amount</th>
+                <th>Edit</th>
+                <th>Date Requested</th>
+                <th>Remove</th>
+            </tr>`
+            products.forEach((item, index, array) => {
+                const isLastRow = index === array.length - 1;
+                const rowClass = isLastRow ? "last-item" : "";
+                htmlString += `\n<tr class="${rowClass}">
+                <td >${index + 1}</td>
+                <td>${item.fields.album}</td>
+                <td>${item.fields.year}</td>
+                <td>${item.fields.artist}</td>
+                <td>${item.fields.amount}</td>
+                <td>
+                <form method="POST" action="increment-amount/${item.pk}/">
+                    {% csrf_token %}
+                    <button class="buttonincdec" type="submit">+</button>
+                </form>
+                <form method="POST" action="decrement-amount/${item.pk}/">
+                    {% csrf_token %}
+                    <button class="buttonincdec" type="submit">-</button>
+                </form>
+                </td>
+                <td>${item.fields.date_added}</td>
+                <td>
+                    <a href="delete-product/${item.pk}">
+                        <button>
+                            Remove
+                        </button>
+                    </a>
+                </td>
+            </tr>` 
+            })
+            document.getElementById("product_table").innerHTML = htmlString
+        }
+        refreshProducts()
+    </script>
+    ```
+### Membuat Modal Sebagai Form untuk Menambahkan Produk
+1. Jika belum menambahkan Bootstrap CSS dan JS, buka file `base.html` pada folder `templates` di root project. Tambahkan kode berikut.
+    #### Bootstrap CSS
+    ```html
+    <head>
+        {% block meta %}
+            ...
+        {% endblock meta %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    </head>
+    ```
+
+    #### JS
+    ```html
+    <head>
+        ...
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script>
+    </head>
+    ```
+
+2. Pada `main.html` di `main/templates`, tambahkan kode ini di atas untuk mengimplementasikan modal Bootstrap yang akan menampilkan form.
+    ```html
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Request Album</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="album" class="col-form-label">Album:</label>
+                            <input type="text" class="form-control" id="album" name="album">
+                        </div>
+                        <div class="mb-3">
+                            <label for="year" class="col-form-label">Year:</label>
+                            <input type="number" class="form-control" id="year" name="year">
+                        </div>
+                        <div class="mb-3">
+                            <label for="artist" class="col-form-label">Artist:</label>
+                            <input type="text" class="form-control" id="artist" name="artist">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Request Album</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    ```
+3. Tambahkan button yang berfungsi untuk menampilkan modal.
+    ```html
+     <a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-bottom: 40px;">Request Album</button>
+    </a>
+    ```
+
+### Menambahkan Data Product dengan AJAX
+1. Buatlah fungsi baru pada block `<Script>` dengan nama `addProduct()`. Isilah fungsi tersebut dengan kode berikut.
+    ```html
+    <script>
+        ...
+        function addProduct() {
+            fetch("{% url 'main:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
+        }
+    </script>
+    ```
+
+2. Tambahkan fungsi *onclick* pada button `"Request Album"` pada modal untuk menjalankan fungsi `addProduct()` dengan menambahkan kode berikut.
+    ```html
+    <script>
+        ...
+        document.getElementById("button_add").onclick = addProduct
+    </script>
+    ```
