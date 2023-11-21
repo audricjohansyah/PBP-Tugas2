@@ -1,96 +1,96 @@
 {% extends 'base.html' %} 
 {% block content %}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid" style="margin-left: 20px;">
-            <a class="navbar-brand" href="#" style="font-size: xx-large;">{{ app }}</a>
-            <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 20px;">{{ name }}</a>
-            <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 20px;">{{ class }}</a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid" style="margin-left: 20px;">
+        <a class="navbar-brand" href="#" style="font-size: 40px; font-family: Impact;">{{ app }}</a>
+        <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 10px;">{{ name }}</a>
+        <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 10px;">{{ class }}</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:show_main' %}" style="margin-left: 20px;">Main</a>
+            </li>
+        </ul>
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:catalogue_view' %}" style="margin-left: 20px;">Catalogue</a>
+            </li>
+            </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:show_main' %}" style="margin-left: 20px;">Main</a>
+                    <a class="nav-link" href="{% url 'main:logout' %}" style="margin-left: 20px;">Logout</a>
                 </li>
             </ul>
-                <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:catalogue_view' %}" style="margin-left: 20px;">Catalogue</a>
-                </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:logout' %}" style="margin-left: 20px;">Logout</a>
-                    </li>
-                </ul>
-            </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <h1 class="heading">SoundW♫ve's Catalogue</h1>
-    <h2 class="description">{{ description }}</h2>
-    <table class="tg">
-        <thead>
-        <tr>
-            <th class="tg-tqnx">No.</th>
-            <th class="tg-tqnx">Album</th>
-            <th class="tg-tqnx">Duration</th>
-            <th class="tg-mhh0">Year</th>
-            <th class="tg-tqnx">Artist</th>
-            <th class="tg-tqnx">Artwork</th>
-            <th class="tg-tqnx">Stock</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td class="tg-hv44">1.</td>
-            <td class="tg-hv44">{{ albums.1 }}</td>
-            <td class="tg-hv44">{{ duration.1 }}</td>
-            <td class="tg-ye1f">{{ year.1 }}</td>
-            <td class="tg-hv44">{{ artists.1 }}</td>
-            <td class="tg-hv44"><img src="{{ artwork.1 }}" width="100" height="100"></td>
-            <th class="tg-hv44">{{ stock.1 }}</th>
-        </tr>
-        <tr>
-            <td class="tg-hv44">2.</td>
-            <td class="tg-hv44">{{ albums.2 }}</td>
-            <td class="tg-hv44">{{ duration.2 }}</td>
-            <td class="tg-ye1f">{{ year.2 }}</td>
-            <td class="tg-hv44">{{ artists.2 }}</td>
-            <td class="tg-hv44"><img src="{{ artwork.2 }}" width="100" height="100"></td>
-            <th class="tg-hv44">{{ stock.2 }}</th>
-        </tr>
-        <tr>
-            <td class="tg-hv44">3.</td>
-            <td class="tg-hv44">{{ albums.3 }}</td>
-            <td class="tg-hv44">{{ duration.3 }}</td>
-            <td class="tg-ye1f">{{ year.3 }}</td>
-            <td class="tg-hv44">{{ artists.3 }}</td>
-            <td class="tg-hv44"><img src="{{ artwork.3 }}" width="100" height="100"></td>
-            <th class="tg-hv44">{{ stock.3 }}</th>
-        </tr>
-        <tr>
-            <td class="tg-hv44">4.</td>
-            <td class="tg-hv44">{{ albums.4 }}</td>
-            <td class="tg-hv44">{{ duration.4 }}</td>
-            <td class="tg-ye1f">{{ year.4 }}</td>
-            <td class="tg-hv44">{{ artists.4 }}</td>
-            <td class="tg-hv44"><img src="{{ artwork.4 }}" width="100" height="100"></td>
-            <th class="tg-hv44">{{ stock.4 }}</th>
-        </tr>
-        <tr>
-            <td class="tg-hv44">5.</td>
-            <td class="tg-hv44">{{ albums.5 }}</td>
-            <td class="tg-hv44">{{ duration.5 }}</td>
-            <td class="tg-ye1f">{{ year.5 }}</td>
-            <td class="tg-hv44">{{ artists.5 }}</td>
-            <td class="tg-hv44"><img src="{{ artwork.5 }}" width="100" height="100"></td>
-            <th class="tg-hv44">{{ stock.5 }}</th>
-        </tr>
-        </tbody>
-  </table>
+<h1 class="heading">SoundW♫ve's Catalogue</h1>
+<h2 class="description">{{ description }}</h2>
+<table class="tg">
+    <thead>
+    <tr>
+        <th class="tg-tqnx">No.</th>
+        <th class="tg-tqnx">Album</th>
+        <th class="tg-tqnx">Duration</th>
+        <th class="tg-mhh0">Year</th>
+        <th class="tg-tqnx">Artist</th>
+        <th class="tg-tqnx">Artwork</th>
+        <th class="tg-tqnx">Stock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="tg-hv44">1.</td>
+        <td class="tg-hv44">{{ albums.1 }}</td>
+        <td class="tg-hv44">{{ duration.1 }}</td>
+        <td class="tg-ye1f">{{ year.1 }}</td>
+        <td class="tg-hv44">{{ artists.1 }}</td>
+        <td class="tg-hv44"><img src="{{ artwork.1 }}" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.1 }}</th>
+    </tr>
+    <tr>
+        <td class="tg-hv44">2.</td>
+        <td class="tg-hv44">{{ albums.2 }}</td>
+        <td class="tg-hv44">{{ duration.2 }}</td>
+        <td class="tg-ye1f">{{ year.2 }}</td>
+        <td class="tg-hv44">{{ artists.2 }}</td>
+        <td class="tg-hv44"><img src="{{ artwork.2 }}" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.2 }}</th>
+    </tr>
+    <tr>
+        <td class="tg-hv44">3.</td>
+        <td class="tg-hv44">{{ albums.3 }}</td>
+        <td class="tg-hv44">{{ duration.3 }}</td>
+        <td class="tg-ye1f">{{ year.3 }}</td>
+        <td class="tg-hv44">{{ artists.3 }}</td>
+        <td class="tg-hv44"><img src="{{ artwork.3 }}" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.3 }}</th>
+    </tr>
+    <tr>
+        <td class="tg-hv44">4.</td>
+        <td class="tg-hv44">{{ albums.4 }}</td>
+        <td class="tg-hv44">{{ duration.4 }}</td>
+        <td class="tg-ye1f">{{ year.4 }}</td>
+        <td class="tg-hv44">{{ artists.4 }}</td>
+        <td class="tg-hv44"><img src="{{ artwork.4 }}" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.4 }}</th>
+    </tr>
+    <tr>
+        <td class="tg-hv44">5.</td>
+        <td class="tg-hv44">{{ albums.5 }}</td>
+        <td class="tg-hv44">{{ duration.5 }}</td>
+        <td class="tg-ye1f">{{ year.5 }}</td>
+        <td class="tg-hv44">{{ artists.5 }}</td>
+        <td class="tg-hv44"><img src="{{ artwork.5 }}" width="100" height="100"></td>
+        <th class="tg-hv44">{{ stock.5 }}</th>
+    </tr>
+    </tbody>
+</table>
 {% endblock content %}
