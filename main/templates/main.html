@@ -1,99 +1,130 @@
 {% extends "base.html" %}
 {% block title %}Soundwave - Home{% endblock %}
 {% block content %}
+    <style type="text/css">
+        body {
+            background-image: url("https://i.etsystatic.com/35092126/r/il/26f5d7/3863487113/il_fullxfull.3863487113_hg2v.jpg");
+            background-size: cover; 
+            background-position: center; 
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        .tg th {
+            background-color: #0056b3;
+        }
+        .tg th, .tg td {
+            border: 1px solid #ffffff;
+            padding: 8px;
+            text-align: center;
+        }
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid" style="margin-left: 20px;">
-        <a class="navbar-brand" href="#" style="font-size: 40px; font-family: Impact;">{{ app }}</a>
-        <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 10px;">{{ name }}</a>
-        <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 10px;">{{ class }}</a>
+        .tg {
+            border-collapse: collapse;
+            background-color: #007BFF;
+            color: white;
+        }
         
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'main:show_main' %}" style="margin-left: 20px;">Main</a>
-            </li>
-          </ul>
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'main:catalogue_view' %}" style="margin-left: 20px;">Catalogue</a>
-              </li>
-            </ul>
+    </style>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid" style="margin-left: 20px;">
+            <a class="navbar-brand" href="#" style="font-size: 40px; font-family: Impact;">{{ app }}</a>
+            <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 10px;">{{ name }}</a>
+            <a class="navbar-brand" href="#" style="font-size: x-large; margin-left: 10px;">{{ class }}</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:logout' %}" style="margin-left: 20px;">Logout</a>
+                    <a class="nav-link" href="{% url 'main:show_main' %}" style="margin-left: 20px;">Main</a>
                 </li>
             </ul>
-        </div>
-    </div>
-  </nav>
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Request Album</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="album" class="col-form-label">Album:</label>
-                        <input type="text" class="form-control" id="album" name="album">
-                    </div>
-                    <div class="mb-3">
-                        <label for="year" class="col-form-label">Year:</label>
-                        <input type="number" class="form-control" id="year" name="year">
-                    </div>
-                    <div class="mb-3">
-                        <label for="artist" class="col-form-label">Artist:</label>
-                        <input type="text" class="form-control" id="artist" name="artist">
-                    </div>
-                    <div class="mb-3">
-                        <label for="amount" class="col-form-label">Amount:</label>
-                        <input type="number" class="form-control" id="amount" name="amount">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Request Album</button>
+                <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:catalogue_view' %}" style="margin-left: 20px;">Catalogue</a>
+                </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:logout' %}" style="margin-left: 20px;">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
-  </div>
+    </nav>
 
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="confirmationModalLabel">Confirm Deletion</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Request Album</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to remove this album?</p>
+                    <form id="form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="album" class="col-form-label">Album:</label>
+                            <input type="text" class="form-control" id="album" name="album">
+                        </div>
+                        <div class="mb-3">
+                            <label for="year" class="col-form-label">Year:</label>
+                            <input type="number" class="form-control" id="year" name="year">
+                        </div>
+                        <div class="mb-3">
+                            <label for="artist" class="col-form-label">Artist:</label>
+                            <input type="text" class="form-control" id="artist" name="artist">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount">
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete" data-bs-dismiss="modal">Remove</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Request Album</button>
                 </div>
             </div>
         </div>
     </div>
 
-  <h5 class="descsession" style="text-align: center;">Last Login Session: {{ last_login }}</h5>
-  <h1 class="addalbum">Request an album</h1>
-  <h2 class="albumcount">Album requested: {{item_count}}</h2>
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="confirmationModalLabel">Confirm Deletion</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to remove this album?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDelete" data-bs-dismiss="modal">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <table class="tg" id="product_table"></table>
-  <a>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-bottom: 40px;">Request Album</button>
-  </a>
+    <h5 class="descsession" style="text-align: center; color: white;">Last Login Session: {{ last_login }}</h5>
+    <h1 class="addalbum" style="color: white;">Request an album</h1>
+    <h2 class="albumcount" style="color: white;">Album requested: {{item_count}}</h2>
+
+    <table class="tg" id="product_table"></table>
+    <a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-bottom: 40px;">Request Album</button>
+    </a>
 
 <script>
   async function getProducts() {
@@ -103,42 +134,46 @@
   async function refreshProducts() {
         document.getElementById("product_table").innerHTML = ""
         const products = await getProducts()
-        let htmlString = `<tr>
-            <th>No.</th>
-            <th>Album</th>
-            <th>Year</th>
-            <th>Artist</th>
-            <th>Amount</th>
-            <th>Edit</th>
-            <th>Date Requested</th>
-            <th>Remove</th>
-        </tr>`
-        products.forEach((item, index, array) => {
-            const isLastRow = index === array.length - 1;
-            const rowClass = isLastRow ? "last-item" : "";
-            htmlString += `\n<tr class="${rowClass}">
-            <td >${index + 1}</td>
-            <td>${item.fields.album}</td>
-            <td>${item.fields.year}</td>
-            <td>${item.fields.artist}</td>
-            <td>${item.fields.amount}</td>
-            <td>
-              <form method="POST" action="increment-amount/${item.pk}/">
-                  {% csrf_token %}
-                <button class="buttonincdec" type="submit">+</button>
-              </form>
-              <form method="POST" action="decrement-amount/${item.pk}/">
-                  {% csrf_token %}
-                <button class="buttonincdec" type="submit">-</button>
-              </form>
-            </td>
-            <td>${item.fields.date_added}</td>
-            <td>
-                <button type="button" class="buttondeletealbum" onclick="showConfirmationModal(${item.pk})">Delete</button>
-            </td>
-        </tr>` 
-        })
-        
+
+        if (products.length === 0) {
+            htmlString = `<text colspan="8" style="text-align:center;">You have not requested any albums.<text>`;
+        } else {
+            htmlString = `<tr>
+                <th>No.</th>
+                <th>Album</th>
+                <th>Year</th>
+                <th>Artist</th>
+                <th>Amount</th>
+                <th>Edit</th>
+                <th>Date Requested</th>
+                <th>Remove</th>
+            </tr>`
+            products.forEach((item, index, array) => {
+                const isLastRow = index === array.length - 1;
+                const rowClass = isLastRow ? "last-item" : "";
+                htmlString += `\n<tr class="${rowClass}">
+                <td >${index + 1}</td>
+                <td>${item.fields.album}</td>
+                <td>${item.fields.year}</td>
+                <td>${item.fields.artist}</td>
+                <td>${item.fields.amount}</td>
+                <td>
+                <form method="POST" action="increment-amount/${item.pk}/">
+                    {% csrf_token %}
+                    <button class="buttonincdec" type="submit">+</button>
+                </form>
+                <form method="POST" action="decrement-amount/${item.pk}/">
+                    {% csrf_token %}
+                    <button class="buttonincdec" type="submit">-</button>
+                </form>
+                </td>
+                <td>${item.fields.date_added}</td>
+                <td>
+                    <button type="button" class="buttondeletealbum" onclick="showConfirmationModal(${item.pk})">Delete</button>
+                </td>
+            </tr>` 
+            })
+        }
         document.getElementById("product_table").innerHTML = htmlString
     }
 

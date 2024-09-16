@@ -54,7 +54,6 @@ def logout(request):
 @csrf_exempt
 def register(request):
     if request.method == "POST":
-        # Extracting values from form data
         username = request.POST.get('username')
         password = request.POST.get('password')
 
@@ -63,7 +62,7 @@ def register(request):
         return JsonResponse({
             "status": True,
             "message": "Account created successfully!",
-            "user_id": new_user.id  # Optionally return the created user's ID
+            "user_id": new_user.id,
         }, status=200)
     
     return JsonResponse({
