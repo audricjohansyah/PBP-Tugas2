@@ -1,6 +1,4 @@
-Nama    : Alexander Audric Johansyah <br>
-NPM     : 2206815466 <br>
-Kelas   : PBP <br>
+# Nama    : Alexander Audric Johansyah
 
 Link Tugas:<br>
 [Tugas 2](#tugas-2) <br>
